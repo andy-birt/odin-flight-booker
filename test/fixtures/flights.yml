@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+# one:
+#   airport: one
+#   departure: 2020-03-27 01:39:44
+#   duration: 1
+
+# two:
+#   airport: two
+#   departure: 2020-03-27 01:39:44
+#   duration: 1

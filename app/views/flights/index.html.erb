@@ -1,0 +1,29 @@
+<div class="row">
+
+  <div class="col-12">
+    <%= form_with method: :get, local: true do %>
+      <%= select :from_airport, :location, Airport.all.collect { |aprt| aprt.location }, placeholder: "From" %>
+      <%= select :to_airport, :location, Airport.all.collect { |aprt| aprt.location }, placeholder: "To" %>
+      <%= select :flight, :departure, Flight.all.collect { |flight| flight.departure.strftime('%m/%d/%Y') }.uniq %>
+      <%= select nil, nil, (1..4) %>
+      <%= submit_tag "Search" %>
+    <% end %>
+  </div>
+
+  <% @flights.each do |flight| %>
+    <div class="col-4">
+      <span><%= flight.from_airport.location %></span>
+      <span>(<%= flight.from_airport.faa %>)</span>
+      <p><%= flight.from_airport.name %></p>
+    </div>
+    <div class="col-4">
+      <span><%= flight.to_airport.location %></span>
+      <span>(<%= flight.to_airport.faa %>)</span>
+      <p><%= flight.to_airport.name %></p>
+    </div>
+    <div class="col-4">
+      <%= button_to "Book" %>
+    </div>
+  <% end if @flights %>
+
+</div>
