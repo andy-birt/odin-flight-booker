@@ -1,29 +1,42 @@
 <div class="row">
 
-  <div class="col-12">
-    <%= form_with method: :get, local: true do %>
-      <%= select :from_airport, :location, Airport.all.collect { |aprt| aprt.location }, placeholder: "From" %>
-      <%= select :to_airport, :location, Airport.all.collect { |aprt| aprt.location }, placeholder: "To" %>
-      <%= select :flight, :departure, Flight.all.collect { |flight| flight.departure.strftime('%m/%d/%Y') }.uniq %>
-      <%= select nil, nil, (1..4) %>
-      <%= submit_tag "Search" %>
-    <% end %>
-  </div>
+  <div class="container">
+    <div class="row">
 
-  <% @flights.each do |flight| %>
-    <div class="col-4">
-      <span><%= flight.from_airport.location %></span>
-      <span>(<%= flight.from_airport.faa %>)</span>
-      <p><%= flight.from_airport.name %></p>
+      <% if @flights.nil? %>
+        <div class="col-12">
+          <h1>Welcome to the Odin Flight Booker</h1>
+          <p>Use the above form to generate a list of flights.</p>
+          <p>When you find the flight you like click the "Book" button to continue.</p>
+          <p>Fill out the information for each passenger then click "Book Flight"</p>
+        </div>
+      <% elsif @flights.empty? %>
+        <div class="col-12">
+          <p>No results were found :(</p>
+        </div>
+      <% end %>
+
+      <% @flights.each do |flight| %>
+        <div class="col-4">
+          <span><%= flight.from_airport.location %></span>
+          <span>(<%= flight.from_airport.faa %>)</span>
+          <p><%= flight.from_airport.name %></p>
+        </div>
+        <div class="col-4">
+          <span><%= flight.to_airport.location %></span>
+          <span>(<%= flight.to_airport.faa %>)</span>
+          <p><%= flight.to_airport.name %></p>
+        </div>
+        <div class="col-2">
+          <span><%= flight.departure.strftime('%m/%d/%Y') %></span>
+          <span style="display: block;" ><%= flight.duration %> hrs.</span>
+        </div>
+        <div class="col-2">
+          <%= button_to "Book", new_flight_booking_path(flight), method: :get, class: "btn btn-primary", params: { seats: params[:seats][0] } %>
+          <span style="display: block;" >$<%= flight.price %></span>
+        </div>
+      <% end if @flights %>
     </div>
-    <div class="col-4">
-      <span><%= flight.to_airport.location %></span>
-      <span>(<%= flight.to_airport.faa %>)</span>
-      <p><%= flight.to_airport.name %></p>
-    </div>
-    <div class="col-4">
-      <%= button_to "Book" %>
-    </div>
-  <% end if @flights %>
+  </div>
 
 </div>

@@ -1,0 +1,14 @@
+<p>Thank you for using the Odin Flight Booker!</p>
+<p>Departs: <%= @booking.flight.departure %></p>
+<h2>(<%= @booking.flight.from_airport.faa %>) -- (<%= @booking.flight.to_airport.faa %>)</h2>
+<p><%= @booking.flight.from_airport.name %> -- <%= @booking.flight.to_airport.name %></p>
+<p><%= @booking.flight.from_airport.location %> -- <%= @booking.flight.to_airport.location %></p>
+<p>Duration: <%= @booking.flight.duration %> hrs.</p>
+<% @booking.passengers.each do |passenger| %>
+  <p></p>
+  <h3>Passenger <%= @booking.passengers.index(passenger) + 1 %></h3>
+  <p></p>
+  <p>Name: <%= passenger.name %></p>
+  <p>Email: <%= passenger.email %></p>
+<% end %>
+<%= link_to 'Home', root_path %> 

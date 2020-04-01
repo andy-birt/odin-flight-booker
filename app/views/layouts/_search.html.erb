@@ -1,0 +1,11 @@
+<div class="row">
+  <div class="col-12">
+    <%= form_with url: root_path, method: :get, local: true, class: "form-group" do %>
+      <%= select :from_airport, :location, Airport.all.collect { |aprt| aprt.location }, { placeholder: "From" }, { class: "btn btn-info" } %>
+      <%= select :to_airport, :location, Airport.all.collect { |aprt| aprt.location }, { placeholder: "To" }, { class: "btn btn-info" } %>
+      <%= select :flight, :departure, Flight.all.collect { |flight| flight.departure.strftime('%Y-%m') }.uniq, {}, { class: "btn btn-info"} %>
+      <%= select :seats, nil, (1..4), {}, { class: "btn btn-info" } %>
+      <%= submit_tag "Search", class: "btn btn-success" %>
+    <% end %>
+  </div>
+</div>

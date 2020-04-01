@@ -1,0 +1,13 @@
+<h1>Book Flight</h1>
+<p>Departure date: <%= @flight.departure %> </p>
+<p>Departing from (<%= @flight.from_airport.faa %>) <%= @flight.from_airport.name %> <%= @flight.from_airport.location %>.</p>
+<p>Arriving at (<%= @flight.to_airport.faa%>) <%= @flight.to_airport.name %> <%= @flight.to_airport.location %>.</p>
+
+<%= form_for @booking, url: flight_bookings_path do |booking_form| %>
+  <%= booking_form.fields_for :passengers do |p| %>
+    <%= p.label "Passenger #{p.index + 1}" %><br>
+    <%= p.text_field :name, placeholder: "Name" %>
+    <%= p.text_field :email, placeholder: "Email" %><br><br>
+  <% end %>
+  <%= booking_form.submit "Book Flight", class: "btn btn-success" %>
+<% end %>
