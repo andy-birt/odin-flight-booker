@@ -10,14 +10,18 @@ class BookingsController < ApplicationController
     @flight = Flight.find(params[:flight_id])
     @booking = @flight.bookings.build(booking_params)
     if @booking.save
-      redirect_to flight_booking_path(@booking)
+      @booking.passengers.each do |passenger|
+        PassengerMailer.with(user: passenger).booking_confirmation.deliver_now!
+      end
+      redirect_to flight_booking_path(@booking.flight_id, @booking)
     else
       render "new"
     end
   end
 
   def show
-    @booking = Booking.find(params[:id])
+    @flight = Flight.find(params[:flight_id])
+    @booking = @flight.bookings.find(params[:id])
   end
 
   private
